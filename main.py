@@ -13,20 +13,20 @@ import time
 # For example, running this (by clicking run or pressing Shift+Enter) will list all files under the input directory
 
 import os
-for dirname, _, filenames in os.walk('\CodingChallengeG2\input\sample'):
+for dirname, _, filenames in os.walk('./input/'):
     for filename in filenames:
         print(os.path.join(dirname, filename))
 
 # You can write up to 20GB to the current directory (/kaggle/working/) that gets preserved as output when you create a version using "Save & Run All" 
 # You can also write temporary files to /kaggle/temp/, but they won't be saved outside of the current session
         
-print(filenames)
+# print(filenames)
 
-inFile = '/kaggle/input/math2020vinunicompetition/sample/sample0.inp'
-ouFile = '/kaggle/input/math2020vinunicompetition/sample/sample1.out'
-# ouFile = '/kaggle/working/sample0.out'
-# inFile = '/graph.inp'
-# ouFile = '/graph.out'
+inFile = './input/sample0.inp'
+ouFile = './input/sample0.out'
+# # ouFile = '/kaggle/working/sample0.out'
+# # inFile = '/graph.inp'
+# # ouFile = '/graph.out'
 
 def print_grid(grid):
     for row in grid:
@@ -50,31 +50,31 @@ grid[ex][ey] = 2
 print_grid(grid)
 
 
-# Visualize the grid using matplotlib
-colors = ['white', 'black', 'red']
+# # Visualize the grid using matplotlib
+# colors = ['white', 'black', 'red']
 
-# Create a figure and axis
-fig, ax = plt.subplots()
+# # Create a figure and axis
+# fig, ax = plt.subplots()
 
-# Plot the grid and add black lines
-for i in range(len(grid)):
-    for j in range(len(grid[0])):
-        square_color = colors[grid[i][j]]
-        ax.add_patch(plt.Rectangle((j, -i-1), 1, 1, fill=True, color=square_color))
+# # Plot the grid and add black lines
+# for i in range(len(grid)):
+#     for j in range(len(grid[0])):
+#         square_color = colors[grid[i][j]]
+#         ax.add_patch(plt.Rectangle((j, -i-1), 1, 1, fill=True, color=square_color))
         
-        # Add black lines to separate squares
-        ax.plot([j, j+1, j+1, j, j], [-i-1, -i-1, -i, -i, -i-1], color='black')
+#         # Add black lines to separate squares
+#         ax.plot([j, j+1, j+1, j, j], [-i-1, -i-1, -i, -i, -i-1], color='black')
 
-# Set aspect ratio and limits
-ax.set_aspect('equal')
-ax.set_xlim(0, len(grid[0]))
-ax.set_ylim(-len(grid), 0)
+# # Set aspect ratio and limits
+# ax.set_aspect('equal')
+# ax.set_xlim(0, len(grid[0]))
+# ax.set_ylim(-len(grid), 0)
 
-# Hide the axes
-ax.axis('off')
+# # Hide the axes
+# ax.axis('off')
 
-# Show the plot
-plt.show()
+# # Show the plot
+# plt.show()
 
 
 
@@ -156,44 +156,44 @@ with open('sample0.out', 'w') as file:
     else:
         file.write("No path found.\n")
     
-# Visualize the grid using matplotlib
-colors = ['white', 'black', 'red', 'yellow']  # Adding yellow for the path
+# # Visualize the grid using matplotlib
+# colors = ['white', 'black', 'red', 'yellow']  # Adding yellow for the path
 
-# Create a figure and axis
-fig, ax = plt.subplots()
+# # Create a figure and axis
+# fig, ax = plt.subplots()
 
-# Plot the grid and add black lines
-for i in range(len(grid)):
-    for j in range(len(grid[0])):
-        square_color = colors[grid[i][j]]
-        ax.add_patch(plt.Rectangle((j, -i-1), 1, 1, fill=True, color=square_color))
-
-        # Add black lines to separate squares
-        ax.plot([j, j+1, j+1, j, j], [-i-1, -i-1, -i, -i, -i-1], color='black')
-
-# Highlight the path in yellow
-if path:
-    for node in path:
-        i, j = node
-        ax.add_patch(plt.Rectangle((j, -i-1), 1, 1, fill=True, color='yellow'))
-
-# Set aspect ratio and limits
-ax.set_aspect('equal')
-ax.set_xlim(0, len(grid[0]))
-ax.set_ylim(-len(grid), 0)
-
-# Add row and column indices to the side
+# # Plot the grid and add black lines
 # for i in range(len(grid)):
-#     ax.text(-0.5, -i - 0.5, str(len(grid) - 1 - i), ha='right', va='center')
+#     for j in range(len(grid[0])):
+#         square_color = colors[grid[i][j]]
+#         ax.add_patch(plt.Rectangle((j, -i-1), 1, 1, fill=True, color=square_color))
+
+#         # Add black lines to separate squares
+#         ax.plot([j, j+1, j+1, j, j], [-i-1, -i-1, -i, -i, -i-1], color='black')
+
+# # Highlight the path in yellow
+# if path:
+#     for node in path:
+#         i, j = node
+#         ax.add_patch(plt.Rectangle((j, -i-1), 1, 1, fill=True, color='yellow'))
+
+# # Set aspect ratio and limits
+# ax.set_aspect('equal')
+# ax.set_xlim(0, len(grid[0]))
+# ax.set_ylim(-len(grid), 0)
+
+# # Add row and column indices to the side
+# # for i in range(len(grid)):
+# #     ax.text(-0.5, -i - 0.5, str(len(grid) - 1 - i), ha='right', va='center')
+# #     ax.text(i + 0.5, 0.5, str(i), ha='center', va='bottom')
+
+# for i in range(len(grid)):
+#     ax.text(-0.5, -i - 0.5, str(i), ha='right', va='center')
 #     ax.text(i + 0.5, 0.5, str(i), ha='center', va='bottom')
-
-for i in range(len(grid)):
-    ax.text(-0.5, -i - 0.5, str(i), ha='right', va='center')
-    ax.text(i + 0.5, 0.5, str(i), ha='center', va='bottom')
     
-# Hide the axes
-ax.axis('off')
+# # Hide the axes
+# ax.axis('off')
 
-# Show the plot
-plt.show()
+# # Show the plot
+# plt.show()
 

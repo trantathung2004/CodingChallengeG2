@@ -120,27 +120,27 @@ start = (sx, sy)
 goal = (ex, ey)
 
 # Calculate run time
-start_time = time.time()
+# start_time = time.time()
 path = astar(grid, start, goal)
-end_time = time.time()
-runtime = end_time - start_time
-print(f"Runtime: {runtime} seconds")
+# end_time = time.time()
+# runtime = end_time - start_time
+# print(f"Runtime: {runtime} seconds")
 
  
 if path and goal in path:
     path.remove(goal)
 
-# print shortest path
-if path:
-    print(len(path)+2)
-    print(str(start[0]) + ' ' + str(start[1]))
-    for node in path:
-        for i in range(len(node)):
-            print(node[i],end=' ')
-        print()
-    print(str(goal[0]) + ' ' + str(goal[1]))
-else:
-    print("No path found.")
+# # print shortest path
+# if path:
+#     print(len(path)+2)
+#     print(str(start[0]) + ' ' + str(start[1]))
+#     for node in path:
+#         for i in range(len(node)):
+#             print(node[i],end=' ')
+#         print()
+#     print(str(goal[0]) + ' ' + str(goal[1]))
+# else:
+#     print("No path found.")
 
 with open('sample0.out', 'w') as file:
     if path:

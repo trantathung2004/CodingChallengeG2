@@ -123,39 +123,103 @@ plt.show()
 def heuristic(node, goal):
     return abs(node[0] - goal[0]) + abs(node[1] - goal[1])
 
+# def astar(grid, start, goal):
+#     rows, cols = len(grid), len(grid[0])
+#     directions = [(-1, 0), (0, -1), (1, 0), (0, 1)]  # Possible movement directions
+
+#     def is_valid(x, y):
+#         return 0 <= x < rows and 0 <= y < cols and grid[x][y] != float('inf')  # Check if the position is within bounds and not blocked
+
+#     open_set = [(0, start)]  # Priority queue with initial node
+#     came_from = {}  # Dictionary to store parent nodes
+#     g_score = {start: 0}  # Cost from start to node
+
+#     while open_set:
+#         current_cost, current_node = heapq.heappop(open_set)
+
+#         if current_node == goal:
+#             path = []
+#             while current_node in came_from:
+#                 path.insert(0, current_node)
+#                 current_node = came_from[current_node]
+#             return path
+
+#         for dx, dy in directions:
+#             neighbor = (current_node[0] + dx, current_node[1] + dy)
+#             if is_valid(*neighbor):
+#                 tentative_g_score = g_score[current_node] + grid[neighbor[0]][neighbor[1]]  # Assuming each move has a cost of 1
+
+#                 if neighbor not in g_score or tentative_g_score < g_score[neighbor]:
+#                     g_score[neighbor] = tentative_g_score
+#                     f_score = tentative_g_score + heuristic(neighbor, goal)
+#                     heapq.heappush(open_set, (f_score, neighbor))
+#                     came_from[neighbor] = current_node
+
+#     return None  # No path found
+
+
+
+
 def astar(grid, start, goal):
     rows, cols = len(grid), len(grid[0])
     directions = [(-1, 0), (0, -1), (1, 0), (0, 1)]  # Possible movement directions
 
     def is_valid(x, y):
-        return 0 <= x < rows and 0 <= y < cols and grid[x][y] != 1  # Check if the position is within bounds and not blocked
-
-    open_set = [(0, start)]  # Priority queue with initial node
-    came_from = {}  # Dictionary to store parent nodes
-    g_score = {start: 0}  # Cost from start to node
-
-    while open_set:
-        current_cost, current_node = heapq.heappop(open_set)
-
-        if current_node == goal:
-            path = []
-            while current_node in came_from:
-                path.insert(0, current_node)
-                current_node = came_from[current_node]
-            return path
+        return 0 <= x < rows and 0 <= y < cols and grid[x][y] != float('inf')  # Check if the position is within bounds and not blocked
+    
+    def getNeighbours(current):
+        n = []
+        directions = [(-1, 0), (0, -1), (1, 0), (0, 1)]  # Possible movement directions
 
         for dx, dy in directions:
-            neighbor = (current_node[0] + dx, current_node[1] + dy)
+            neighbor = (current[0] + dx, current[1] + dy)
             if is_valid(*neighbor):
-                tentative_g_score = g_score[current_node] + grid[neighbor[0]][neighbor[1]]  # Assuming each move has a cost of 1
+                n.append(neighbor)
+        return n
+    
+    G = {}
+    F = {}
+    G[start] = 0
+    F[start] = heuristic(start, goal)
 
-                if neighbor not in g_score or tentative_g_score < g_score[neighbor]:
-                    g_score[neighbor] = tentative_g_score
-                    f_score = tentative_g_score + heuristic(neighbor, goal)
-                    heapq.heappush(open_set, (f_score, neighbor))
-                    came_from[neighbor] = current_node
+    closedVertices = set()
+    openVertices = set([start])
+    cameFrom = {}
+    
+    while len(openVertices) > 0:
+        current = None
+        currentFscore = None
+        for pos in openVertices:
+            if current is None or F[pos] < currentFscore:
+                currentFscore = F[pos]
+                current = pos
+        
+        if current == goal:
+            path = [current]
+            while current in cameFrom:
+                current = cameFrom[current]
+                path.append(current)
+            path.reverse()
+            return path, F[goal]  # Done!
+        
+        openVertices.remove(current)
+        closedVertices.add(current)
 
-    return None  # No path found
+        for neighbour in getNeighbours(current):
+            if neighbour in closedVertices: 
+                continue
+            candidateG = G[current] + grid[neighbour[0]][neighbour[1]]
+
+            if neighbour not in openVertices:
+                openVertices.add(neighbour)
+            elif candidateG >= G[neighbour]:
+                continue
+
+            cameFrom[neighbour] = current
+            G[neighbour] = candidateG
+            H = heuristic(neighbour, goal)
+            F[neighbour] = G[neighbour] + H
+    raise RuntimeError("A* failed to find a solution")
 
 # Find the shortest path
 start = (sx, sy)
@@ -163,7 +227,7 @@ goal = (ex, ey)
 
 # Calculate run time
 # start_time = time.time()
-path = astar(grid, start, goal)
+path, cost = astar(grid, start, goal)
 # end_time = time.time()
 # runtime = end_time - start_time
 # print(f"Runtime: {runtime} seconds")
@@ -175,20 +239,21 @@ if path and goal in path:
 # print shortest path
 if path:
     print(len(path)+2)
-    print(str(start[0]) + ' ' + str(start[1]))
+    # print(str(start[0]) + ' ' + str(start[1]))
     for node in path:
-        for i in range(len(node)):
-            print(node[i],end=' ')
-        print()
-    print(str(goal[0]) + ' ' + str(goal[1]))
+        
+        print(node[0],node[1])
+        # print()
+        
+    # print(str(goal[0]) + ' ' + str(goal[1]))
 else:
     print("No path found.")
 
 with open('sample0.out', 'w') as file:
     if path:
         file.write(str(len(path) + 2) + '\n')
-        file.write(str(start[0])+' ')
-        file.write(str(start[1]) + '\n')
+        # file.write(str(start[0])+' ')
+        # file.write(str(start[1]) + '\n')
         for node in path:
             for i in range(len(node)):
                 file.write(str(node[i]) + ' ')
@@ -199,11 +264,11 @@ with open('sample0.out', 'w') as file:
         file.write("No path found.\n")
     
 # Run A* to find the path
-path = astar(grid, start, goal)
+# path = astar(grid, start, goal)
 
 # Mark the path on the grid
 path_value = -2  # Special marker for the path
-for x, y in path:
+for node in path:
     grid[x][y] = path_value
 
 # Visualization code

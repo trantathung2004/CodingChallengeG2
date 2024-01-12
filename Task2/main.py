@@ -46,7 +46,7 @@ for ii in range(k):
     grid[xx][yy] = float('inf')
 
 lline = f.readline()
-print(lline)
+# print(lline)
 sx, sy, ex, ey = [int(x) for x in lline.split()]
 
 h = int(f.readline())
@@ -66,57 +66,57 @@ for i in range(n):
 
 grid[sx][sy] = -1
 grid[ex][ey] = -1
-print_grid(grid)
+# print_grid(grid)
 
 
-# Visualize the grid using matplotlib
-# colors = ['white', 'black', 'red']
-block_color = 'black'
-start_color = 'red'
-default_weight_color = 'white'
+# # Visualize the grid using matplotlib
+# # colors = ['white', 'black', 'red']
+# block_color = 'black'
+# start_color = 'red'
+# default_weight_color = 'white'
 
-# Create a figure and axis
-fig, ax = plt.subplots()
+# # Create a figure and axis
+# fig, ax = plt.subplots()
 
-max_weight = max(max(cell for cell in row if cell != float('inf')) for row in grid)
+# max_weight = max(max(cell for cell in row if cell != float('inf')) for row in grid)
 
-norm = mcolors.Normalize(vmin=0, vmax=max_weight, clip=True)
-mapper = plt.cm.ScalarMappable(norm=norm, cmap=plt.cm.viridis)  # You can change the colormap to your preference
+# norm = mcolors.Normalize(vmin=0, vmax=max_weight, clip=True)
+# mapper = plt.cm.ScalarMappable(norm=norm, cmap=plt.cm.viridis)  # You can change the colormap to your preference
 
-# Plot the grid and add black lines
-for i in range(len(grid)):
-    for j in range(len(grid[0])):
-        value = grid[i][j]
+# # Plot the grid and add black lines
+# for i in range(len(grid)):
+#     for j in range(len(grid[0])):
+#         value = grid[i][j]
 
-        if value == float('inf'):
-            color = block_color
-        elif value == default_weight:
-            color = default_weight_color
-        elif (i, j) == (sx, sy) or (i, j) == (ex, ey):
-            color = start_color
-        else:
-            color = mapper.to_rgba(value)
+#         if value == float('inf'):
+#             color = block_color
+#         elif value == default_weight:
+#             color = default_weight_color
+#         elif (i, j) == (sx, sy) or (i, j) == (ex, ey):
+#             color = start_color
+#         else:
+#             color = mapper.to_rgba(value)
         
-        ax.add_patch(plt.Rectangle((j, -i-1), 1, 1, fill=True, color=color))
+#         ax.add_patch(plt.Rectangle((j, -i-1), 1, 1, fill=True, color=color))
         
-        # Add black lines to separate squares
+#         # Add black lines to separate squares
     
-for i in range(len(grid)+1):
-        # ax.plot([j, j+1, j+1, j, j], [-i-1, -i-1, -i, -i, -i-1], color='black')
-    ax.plot([0, len(grid[0])], [-i, -i], color='black')
-for j in range(len(grid[0])+1):
-    ax.plot([j, j], [0, -len(grid)], color='black')
+# for i in range(len(grid)+1):
+#         # ax.plot([j, j+1, j+1, j, j], [-i-1, -i-1, -i, -i, -i-1], color='black')
+#     ax.plot([0, len(grid[0])], [-i, -i], color='black')
+# for j in range(len(grid[0])+1):
+#     ax.plot([j, j], [0, -len(grid)], color='black')
 
-# Set aspect ratio and limits
-ax.set_aspect('equal')
-ax.set_xlim(0, len(grid[0]))
-ax.set_ylim(-len(grid), 0)
+# # Set aspect ratio and limits
+# ax.set_aspect('equal')
+# ax.set_xlim(0, len(grid[0]))
+# ax.set_ylim(-len(grid), 0)
 
-# Hide the axes
-ax.axis('off')
+# # Hide the axes
+# ax.axis('off')
 
-# Show the plot
-plt.show()
+# # Show the plot
+# plt.show()
 
 
 
@@ -219,8 +219,8 @@ def astar(grid, start, goal):
             G[neighbour] = candidateG
             H = heuristic(neighbour, goal)
             F[neighbour] = G[neighbour] + H
-    raise RuntimeError("A* failed to find a solution")
-
+    # raise RuntimeError("A* failed to find a solution")
+    return None, None
 # Find the shortest path
 start = (sx, sy)
 goal = (ex, ey)
@@ -233,33 +233,33 @@ path, cost = astar(grid, start, goal)
 # print(f"Runtime: {runtime} seconds")
 
  
-if path and goal in path:
-    path.remove(goal)
+# if path and goal in path:
+    # path.remove(goal)
 
 # print shortest path
-if path:
-    print(len(path)+2)
-    # print(str(start[0]) + ' ' + str(start[1]))
-    for node in path:
+# if path:
+#     print(len(path)+1)
+#     # print(str(start[0]) + ' ' + str(start[1]))
+#     for node in path:
         
-        print(node[0],node[1])
-        # print()
+#         print(node[0],node[1])
+#         # print()
         
-    # print(str(goal[0]) + ' ' + str(goal[1]))
-else:
-    print("No path found.")
+#     print(str(goal[0]) + ' ' + str(goal[1]))
+# else:
+#     print("No path found.")
 
 with open('sample0.out', 'w') as file:
     if path:
-        file.write(str(len(path) + 2) + '\n')
+        file.write(str(len(path)) + '\n')
         # file.write(str(start[0])+' ')
         # file.write(str(start[1]) + '\n')
         for node in path:
             for i in range(len(node)):
                 file.write(str(node[i]) + ' ')
             file.write('\n')
-        file.write(str(goal[0]) + ' ')
-        file.write(str(goal[1])+'\n')
+        # file.write(str(goal[0]) + ' ')
+        # file.write(str(goal[1])+'\n')
     else:
         file.write("No path found.\n")
     
@@ -267,9 +267,12 @@ with open('sample0.out', 'w') as file:
 # path = astar(grid, start, goal)
 
 # Mark the path on the grid
-path_value = -2  # Special marker for the path
-for node in path:
-    grid[x][y] = path_value
+# if path and start in path:
+#     path.remove(start)
+# path_value = -2  # Special marker for the path
+# for node in path:
+#     x, y = node
+#     grid[x][y] = path_value
 
 # Visualization code
 # import matplotlib.pyplot as plt
@@ -277,58 +280,56 @@ for node in path:
 # Define colors
 # blocked_color = 'black'
 # default_weight_color = 'white'
-path_color = 'yellow'  # Color for the path
-# start_color = 'green'
-# end_color = 'blue'
 
-fig, ax = plt.subplots()
+# path_color = 'yellow'  # Color for the path
+# start_color = 'red'
+# # end_color = 'blue'
 
-for i in range(len(grid)):
-    for j in range(len(grid[0])):
-        value = grid[i][j]
-
-        if value == float('inf'):
-            color = block_color
-        elif value == path_value:
-            color = path_color
-        elif (i, j) == start:
-            color = start_color
-        elif (i, j) == goal:
-            color = start_color
-        else:
-            color = default_weight_color  # or use a colormap for different weights
-
-        ax.add_patch(plt.Rectangle((j, -i-1), 1, 1, fill=True, color=color))
-
-# Add black lines to separate squares
-for i in range(len(grid) + 1):
-    ax.plot([0, len(grid[0])], [-i, -i], color='black')
-for j in range(len(grid[0]) + 1):
-    ax.plot([j, j], [0, -len(grid)], color='black')
-
-ax.set_aspect('equal')
-ax.set_xlim
-
-# # Visualize the grid using matplotlib
-# colors = ['white', 'black', 'red', 'yellow']  # Adding yellow for the path
-
-# # Create a figure and axis
 # fig, ax = plt.subplots()
 
-# # Plot the grid and add black lines
 # for i in range(len(grid)):
 #     for j in range(len(grid[0])):
-#         square_color = colors[grid[i][j]]
-#         ax.add_patch(plt.Rectangle((j, -i-1), 1, 1, fill=True, color=square_color))
+#         value = grid[i][j]
 
-#         # Add black lines to separate squares
-#         ax.plot([j, j+1, j+1, j, j], [-i-1, -i-1, -i, -i, -i-1], color='black')
+#         if value == float('inf'):
+#             color = block_color
+#         elif value == path_value:
+#             color = path_color
+#         elif (i, j) == start or (i, j) == goal:
+#             color = start_color
+#         elif value == default_weight:
+#             color = default_weight_color
+#         else:
+#             color = mapper.to_rgba(value)  # or use a colormap for different weights
 
-# # Highlight the path in yellow
-# if path:
-#     for node in path:
-#         i, j = node
-#         ax.add_patch(plt.Rectangle((j, -i-1), 1, 1, fill=True, color='yellow'))
+#         ax.add_patch(plt.Rectangle((j, -i-1), 1, 1, fill=True, color=color))
+
+# # Add black lines to separate squares
+# for i in range(len(grid) + 1):
+#     ax.plot([0, len(grid[0])], [-i, -i], color='black')
+# for j in range(len(grid[0]) + 1):
+#     ax.plot([j, j], [0, -len(grid)], color='black')
+
+# # # Visualize the grid using matplotlib
+# # colors = ['white', 'black', 'red', 'yellow']  # Adding yellow for the path
+
+# # # Create a figure and axis
+# # fig, ax = plt.subplots()
+
+# # # Plot the grid and add black lines
+# # for i in range(len(grid)):
+# #     for j in range(len(grid[0])):
+# #         square_color = colors[grid[i][j]]
+# #         ax.add_patch(plt.Rectangle((j, -i-1), 1, 1, fill=True, color=square_color))
+
+# #         # Add black lines to separate squares
+# #         ax.plot([j, j+1, j+1, j, j], [-i-1, -i-1, -i, -i, -i-1], color='black')
+
+# # # Highlight the path in yellow
+# # if path:
+# #     for node in path:
+# #         i, j = node
+# #         ax.add_patch(plt.Rectangle((j, -i-1), 1, 1, fill=True, color='yellow'))
 
 # # Set aspect ratio and limits
 # ax.set_aspect('equal')

@@ -13,42 +13,10 @@ import time
 # For example, running this (by clicking run or pressing Shift+Enter) will list all files under the input directory
 
 import os
-for dirname, _, filenames in os.walk('./input/'):
-    for filename in filenames:
-        print(os.path.join(dirname, filename))
-
-# You can write up to 20GB to the current directory (/kaggle/working/) that gets preserved as output when you create a version using "Save & Run All" 
-# You can also write temporary files to /kaggle/temp/, but they won't be saved outside of the current session
-        
-# print(filenames)
-
-inFile = './input/sample0.inp'
-ouFile = './input/sample0.out'
-# # ouFile = '/kaggle/working/sample0.out'
-# # inFile = '/graph.inp'
-# # ouFile = '/graph.out'
 
 def print_grid(grid):
     for row in grid:
         print(" ".join(map(str, row)))
-
-f = open(inFile, 'r')
-line = f.readline()
-n, m, k = [int(x) for x in line.split()]
-listBlocks = []
-grid = [[0] * m for _ in range(n)]
-for ii in range(k):
-    line = f.readline()
-    xx, yy = [int(x) for x in line.split()]
-    grid[xx][yy] = 1
-
-lline = f.readline()
-# print(lline)
-sx, sy, ex, ey = [int(x) for x in lline.split()]
-grid[sx][sy] = 2
-grid[ex][ey] = 2
-# print_grid(grid)
-
 
 # # Visualize the grid using matplotlib
 # colors = ['white', 'black', 'red']
@@ -115,46 +83,78 @@ def astar(grid, start, goal):
 
     return None  # No path found
 
-# Find the shortest path
-start = (sx, sy)
-goal = (ex, ey)
+listInp = []
+for dirname, _, filenames in os.walk('./sample'):
+    for filename in filenames:
+        if filename[-3:]  == 'inp':
+            listInp.append(os.path.join(dirname, filename))
+listInp = sorted(listInp)
+for idx, filename in enumerate(listInp):
+    input_file = filename
+    counter = filename.split('.')[1].split('/')[-1]
+    counter = int(counter[6:])
 
-# Calculate run time
-# start_time = time.time()
-path = astar(grid, start, goal)
-# end_time = time.time()
-# runtime = end_time - start_time
-# print(f"Runtime: {runtime} seconds")
+    f = open(filename, 'r')
+    line = f.readline()
+    n, m, k = [int(x) for x in line.split()]
+    listBlocks = []
+    grid = [[0] * m for _ in range(n)]
+    for ii in range(k):
+        line = f.readline()
+        xx, yy = [int(x) for x in line.split()]
+        grid[xx][yy] = 1
 
- 
-if path and goal in path:
-    path.remove(goal)
+    lline = f.readline()
+    # print(lline)
+    sx, sy, ex, ey = [int(x) for x in lline.split()]
+    grid[sx][sy] = 2
+    grid[ex][ey] = 2
+    # print_grid(grid)
 
-# # print shortest path
-# if path:
-#     print(len(path)+2)
-#     print(str(start[0]) + ' ' + str(start[1]))
-#     for node in path:
-#         for i in range(len(node)):
-#             print(node[i],end=' ')
-#         print()
-#     print(str(goal[0]) + ' ' + str(goal[1]))
-# else:
-#     print("No path found.")
+    # Find the shortest path
+    start = (sx, sy)
+    goal = (ex, ey)
 
-with open('sample0.out', 'w') as file:
-    if path:
-        file.write(str(len(path) + 2) + '\n')
-        file.write(str(start[0])+' ')
-        file.write(str(start[1]) + '\n')
-        for node in path:
-            for i in range(len(node)):
-                file.write(str(node[i]) + ' ')
-            file.write('\n')
-        file.write(str(goal[0]) + ' ')
-        file.write(str(goal[1])+'\n')
-    else:
-        file.write("No path found.\n")
+    # Calculate run time
+    # start_time = time.time()
+    path = astar(grid, start, goal)
+    # end_time = time.time()
+    # runtime = end_time - start_time
+    # print(f"Runtime: {runtime} seconds")
+
+     
+    if path and goal in path:
+        path.remove(goal)
+
+    # # print shortest path
+    # if path:
+    #     print(len(path)+2)
+    #     print(str(start[0]) + ' ' + str(start[1]))
+    #     for node in path:
+    #         for i in range(len(node)):
+    #             print(node[i],end=' ')
+    #         print()
+    #     print(str(goal[0]) + ' ' + str(goal[1]))
+    # else:
+    #     print("No path found.")
+    if not os.path.exists('./result'):
+            os.mkdir('./result')
+
+    filename = f'./result/sample{counter}.out'
+    
+    with open(filename, 'w') as file:
+        if path:
+            file.write(str(len(path) + 2) + '\n')
+            file.write(str(start[0])+' ')
+            file.write(str(start[1]) + '\n')
+            for node in path:
+                for i in range(len(node)):
+                    file.write(str(node[i]) + ' ')
+                file.write('\n')
+            file.write(str(goal[0]) + ' ')
+            file.write(str(goal[1])+'\n')
+        else:
+            file.write("0\n")
     
 # # Visualize the grid using matplotlib
 # colors = ['white', 'black', 'red', 'yellow']  # Adding yellow for the path

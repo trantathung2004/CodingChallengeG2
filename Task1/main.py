@@ -43,11 +43,11 @@ for ii in range(k):
     grid[xx][yy] = 1
 
 lline = f.readline()
-print(lline)
+# print(lline)
 sx, sy, ex, ey = [int(x) for x in lline.split()]
 grid[sx][sy] = 2
 grid[ex][ey] = 2
-print_grid(grid)
+# print_grid(grid)
 
 
 # # Visualize the grid using matplotlib

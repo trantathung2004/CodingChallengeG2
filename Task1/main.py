@@ -56,7 +56,7 @@ def astar(grid, start, goal):
     return None  # No path found
 
 listInp = []
-for dirname, _, filenames in os.walk('./sample'):
+for dirname, _, filenames in os.walk('./sample/'):
     for filename in filenames:
         if filename[-3:]  == 'inp':
             listInp.append(os.path.join(dirname, filename))
@@ -95,8 +95,8 @@ for idx, filename in enumerate(listInp):
     # print(f"Runtime: {runtime} seconds")
 
      
-    if path and goal in path:
-        path.remove(goal)
+    # if path and goal in path:
+    #     path.remove(goal)
 
     # # print shortest path
     # if path:
@@ -116,15 +116,15 @@ for idx, filename in enumerate(listInp):
     
     with open(filename, 'w') as file:
         if path:
-            file.write(str(len(path) + 2) + '\n')
+            file.write(str(len(path) + 1) + '\n')
             file.write(str(start[0])+' ')
             file.write(str(start[1]) + '\n')
             for node in path:
                 for i in range(len(node)):
                     file.write(str(node[i]) + ' ')
                 file.write('\n')
-            file.write(str(goal[0]) + ' ')
-            file.write(str(goal[1])+'\n')
+            # file.write(str(goal[0]) + ' ')
+            # file.write(str(goal[1])+'\n')
         else:
             file.write("0\n")
     

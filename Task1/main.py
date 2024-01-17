@@ -18,34 +18,6 @@ def print_grid(grid):
     for row in grid:
         print(" ".join(map(str, row)))
 
-# # Visualize the grid using matplotlib
-# colors = ['white', 'black', 'red']
-
-# # Create a figure and axis
-# fig, ax = plt.subplots()
-
-# # Plot the grid and add black lines
-# for i in range(len(grid)):
-#     for j in range(len(grid[0])):
-#         square_color = colors[grid[i][j]]
-#         ax.add_patch(plt.Rectangle((j, -i-1), 1, 1, fill=True, color=square_color))
-        
-#         # Add black lines to separate squares
-#         ax.plot([j, j+1, j+1, j, j], [-i-1, -i-1, -i, -i, -i-1], color='black')
-
-# # Set aspect ratio and limits
-# ax.set_aspect('equal')
-# ax.set_xlim(0, len(grid[0]))
-# ax.set_ylim(-len(grid), 0)
-
-# # Hide the axes
-# ax.axis('off')
-
-# # Show the plot
-# plt.show()
-
-
-
 def heuristic(node, goal):
     return abs(node[0] - goal[0]) + abs(node[1] - goal[1])
 

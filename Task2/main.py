@@ -14,9 +14,9 @@ import time
 # For example, running this (by clicking run or pressing Shift+Enter) will list all files under the input directory
 
 import os
-for dirname, _, filenames in os.walk('./input/'):
-    for filename in filenames:
-        print(os.path.join(dirname, filename))
+# for dirname, _, filenames in os.walk('./input/'):
+#     for filename in filenames:
+#         print(os.path.join(dirname, filename))
 
 # You can write up to 20GB to the current directory (/kaggle/working/) that gets preserved as output when you create a version using "Save & Run All" 
 # You can also write temporary files to /kaggle/temp/, but they won't be saved outside of the current session
@@ -211,7 +211,7 @@ for idx, filename in enumerate(listInp):
     #     print("No path found.")
     if not os.path.exists('./result'):
             os.mkdir('./result')
-            
+
     filename = f'./result/sample{counter}.out'
 
     with open(filename, 'w') as file:

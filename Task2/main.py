@@ -211,6 +211,7 @@ for idx, filename in enumerate(listInp):
     #     print("No path found.")
     if not os.path.exists('./result'):
             os.mkdir('./result')
+            
     filename = f'./result/sample{counter}.out'
 
     with open(filename, 'w') as file:
@@ -225,7 +226,7 @@ for idx, filename in enumerate(listInp):
             # file.write(str(goal[0]) + ' ')
             # file.write(str(goal[1])+'\n')
         else:
-            file.write("No path found.\n")
+            file.write("0\n")
         
     # Run A* to find the path
     # path = astar(grid, start, goal)

@@ -209,8 +209,11 @@ for idx, filename in enumerate(listInp):
     #     print(str(goal[0]) + ' ' + str(goal[1]))
     # else:
     #     print("No path found.")
+    if not os.path.exists('./result'):
+            os.mkdir('./result')
+    filename = f'./result/sample{counter}.out'
 
-    with open('sample0.out', 'w') as file:
+    with open(filename, 'w') as file:
         if path:
             file.write(str(len(path)) + '\n')
             # file.write(str(start[0])+' ')

@@ -14,7 +14,7 @@ import time
 # For example, running this (by clicking run or pressing Shift+Enter) will list all files under the input directory
 
 import os
-# for dirname, _, filenames in os.walk('./input/'):
+# for dirname, _, filenames in os.walk('./sample'):
 #     for filename in filenames:
 #         print(os.path.join(dirname, filename))
 
@@ -139,7 +139,7 @@ def astar(grid, start, goal):
     return None, None
 
 listInp = []
-for dirname, _, filenames in os.walk('./sample'):
+for dirname, _, filenames in os.walk('./sample/'):
     for filename in filenames:
         if filename[-3:]  == 'inp':
             listInp.append(os.path.join(dirname, filename))

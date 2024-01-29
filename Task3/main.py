@@ -6,7 +6,7 @@ def print_grid(grid):
     for row in grid:
         print(" ".join(map(str, row)))
 
-def color_grid(N, M, grid, blocks):
+def color_grid(N, M, grid):
     # Function to get the available colors for a cell
     def get_available_colors(x, y):
         colors = set(range(N * M))
@@ -17,10 +17,6 @@ def color_grid(N, M, grid, blocks):
                     colors.remove(grid[nx][ny])
         return colors
 
-    # Marking blocks in the grid with a special value
-    for x, y in blocks:
-        grid[x][y] = -2
-
     # Color the grid
     for x in range(N):
         for y in range(M):
@@ -28,17 +24,7 @@ def color_grid(N, M, grid, blocks):
                 available_colors = get_available_colors(x, y)
                 grid[x][y] = min(available_colors)  # Assign the lowest available color
 
-    # Counting the number of colors used
-    colors_used = len(set(color for row in grid for color in row if color >= 0))
-
-    # Preparing the output
-    output = [colors_used]
-    for x in range(N):
-        for y in range(M):
-            if grid[x][y] >= 0:
-                output.append((x, y, grid[x][y]))
-
-    return output
+    return grid
 
 listInp = []
 for dirname, _, filenames in os.walk('./sample/'):
@@ -54,18 +40,18 @@ for idx, filename in enumerate(listInp):
     f = open(filename, 'r')
     line = f.readline()
     n, m, k = [int(x) for x in line.split()]
-    listBlocks = []
+    # listBlocks = []
     grid = [[0] * m for _ in range(n)]
     blocks = []
     for ii in range(k):
         line = f.readline()
         xx, yy = [int(x) for x in line.split()]
-        grid[xx][yy] = 1
+        grid[xx][yy] = -1
         blocks.append((xx, yy))
 
     lline = f.readline()       
 
-    result = color_grid(n, m, grid, blocks)
+    colored_grid = color_grid(n, m, grid)
 
     if not os.path.exists('./result'):
             os.mkdir('./result')
@@ -73,6 +59,5 @@ for idx, filename in enumerate(listInp):
     filename = f'./result/sample{counter}.out'  
 
     with open(filename, 'w') as file:
-        file.write(str(result[0]) + '\n')
-        for i in range(1, len(result)):
-            file.write(str(result[i][0]) + ' ' + str(result[i][1]) + ' ' + str(result[i][2]) + '\n')  
+        for row in colored_grid:
+            file.write(" ".join(map(str, row)) + '\n')

@@ -10,7 +10,7 @@ def color_grid(N, M, grid):
     # Function to get the available colors for a cell
     def get_available_colors(x, y):
         colors = set(range(N * M))
-        for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+        for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, -1), (-1, 1), (1, -1), (1, 1)]:
             nx, ny = x + dx, y + dy
             if 0 <= nx < N and 0 <= ny < M and grid[nx][ny] >= 0:
                 if grid[nx][ny] in colors:
@@ -42,12 +42,12 @@ for idx, filename in enumerate(listInp):
     n, m, k = [int(x) for x in line.split()]
     # listBlocks = []
     grid = [[0] * m for _ in range(n)]
-    blocks = []
+    # blocks = []
     for ii in range(k):
         line = f.readline()
         xx, yy = [int(x) for x in line.split()]
         grid[xx][yy] = -1
-        blocks.append((xx, yy))
+        # blocks.append((xx, yy))
 
     lline = f.readline()       
 
